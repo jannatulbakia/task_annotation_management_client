@@ -128,7 +128,7 @@ export default function EditTaskModal({ task, onClose }: Props) {
               <label className="mb-1.5 block text-sm font-semibold text-slate-700">Priority</label>
               <select
                 value={priority}
-                onChange={(e) => setPriority(e.target.value)}
+                onChange={(e) => setPriority(e.target.value as Task["priority"])}
                 className="w-full rounded-xl border border-slate-200 p-3 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
               >
                 <option value="low">Low</option>
