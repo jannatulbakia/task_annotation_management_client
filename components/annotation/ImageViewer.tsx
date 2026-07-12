@@ -1,6 +1,7 @@
 "use client";
 
 import { Trash2 } from "lucide-react";
+import AuthenticatedImage from "@/components/annotation/AuthenticatedImage";
 import { useAnnotationStore } from "@/store/annotationStore";
 import { deleteImage } from "@/services/annotation";
 
@@ -45,7 +46,8 @@ export default function ImageViewer() {
                   : "border-transparent hover:border-slate-300"
               }`}
             >
-              <img
+              <AuthenticatedImage
+                imageId={img.id}
                 src={img.image}
                 alt="Thumbnail"
                 className="h-20 w-28 object-cover"

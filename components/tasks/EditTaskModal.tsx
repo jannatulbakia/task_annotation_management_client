@@ -16,8 +16,8 @@ export default function EditTaskModal({ task, onClose }: Props) {
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [priority, setPriority] = useState("medium");
-  const [status, setStatus] = useState("todo");
+  const [priority, setPriority] = useState<Task["priority"]>("medium");
+  const [status, setStatus] = useState<Task["status"]>("todo");
   const [dueDate, setDueDate] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -141,7 +141,7 @@ export default function EditTaskModal({ task, onClose }: Props) {
               <label className="mb-1.5 block text-sm font-semibold text-slate-700">Status</label>
               <select
                 value={status}
-                onChange={(e) => setStatus(e.target.value)}
+                onChange={(e) => setStatus(e.target.value as Task["status"])}
                 className="w-full rounded-xl border border-slate-200 p-3 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
               >
                 <option value="todo">Todo</option>

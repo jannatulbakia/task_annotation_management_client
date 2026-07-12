@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, useCallback } from "react";
+import AuthenticatedImage from "@/components/annotation/AuthenticatedImage";
 import { useAnnotationStore } from "@/store/annotationStore";
 
 interface LabelModalProps {
@@ -135,7 +136,7 @@ export default function AnnotationCanvas() {
 
       <div
         ref={containerRef}
-        className={`relative select-none overflow-hidden rounded-2xl border border-slate-200 bg-slate-900 ${
+        className={`relative min-h-[400px] select-none overflow-hidden rounded-2xl border border-slate-200 bg-slate-900 ${
           mode === "draw" ? "cursor-crosshair" : "cursor-default"
         }`}
         onClick={handleClick}
@@ -144,7 +145,8 @@ export default function AnnotationCanvas() {
         onMouseLeave={handleMouseLeave}
       >
         {/* The image */}
-        <img
+        <AuthenticatedImage
+          imageId={currentImage.id}
           src={currentImage.image}
           alt="Radiology scan"
           className="block h-full max-h-[600px] w-full object-contain"

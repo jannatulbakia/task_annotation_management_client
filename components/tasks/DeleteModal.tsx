@@ -23,9 +23,9 @@ export default function DeleteModal({
   if (!task) return null;
 
   async function handleDelete() {
+    if (!task) return;
 
     try {
-
       await deleteTask(task.id);
 
       await fetchTasks();

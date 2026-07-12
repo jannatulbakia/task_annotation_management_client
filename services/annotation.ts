@@ -19,6 +19,11 @@ export const uploadImage = async (file: File): Promise<UploadedImage> => {
   return response.data;
 };
 
+export const getImageFileUrl = (id: number): string => {
+  const base = process.env.NEXT_PUBLIC_API_URL ?? "";
+  return `${base.replace(/\/$/, "")}/annotation/images/${id}/file/`;
+};
+
 export const deleteImage = async (id: number): Promise<void> => {
   await api.delete(`/annotation/images/${id}/`);
 };
