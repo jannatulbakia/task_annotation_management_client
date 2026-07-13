@@ -110,7 +110,7 @@ export default function Home() {
               <span className="transition group-hover:translate-x-0.5">→</span>
             </Link>
             <span className="font-mono text-xs text-[#8A9389]">
-              demo: john@gmail.com
+              demo: jack@gmail.com
             </span>
           </div>
         </div>

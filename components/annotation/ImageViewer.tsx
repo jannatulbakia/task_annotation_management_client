@@ -27,8 +27,8 @@ export default function ImageViewer() {
   }
 
   return (
-    <div className="mt-4">
-      <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-slate-400">
+    <div className="mt-2">
+      <p className="mb-2 font-mono text-xs font-semibold uppercase tracking-widest text-[#8A9389]">
         Images ({images.length})
       </p>
 
@@ -42,8 +42,8 @@ export default function ImageViewer() {
               onClick={() => setCurrentImage(img)}
               className={`group relative flex-shrink-0 cursor-pointer overflow-hidden rounded-xl border-2 transition-all duration-200 ${
                 isActive
-                  ? "border-blue-500 shadow-lg shadow-blue-100"
-                  : "border-transparent hover:border-slate-300"
+                  ? "border-[#2A8C7A] shadow-md shadow-[#2A8C7A]/10"
+                  : "border-transparent hover:border-[#DCE3D7]"
               }`}
             >
               <AuthenticatedImage
@@ -56,14 +56,14 @@ export default function ImageViewer() {
               {/* Delete button */}
               <button
                 onClick={(e) => handleDelete(e, img.id)}
-                className="absolute right-1 top-1 hidden rounded-full bg-black/60 p-1 text-white transition hover:bg-red-600 group-hover:flex"
+                className="absolute right-1 top-1 hidden rounded-full bg-black/60 p-1 text-white transition hover:bg-[#C43D3D] group-hover:flex"
                 title="Delete image"
               >
                 <Trash2 size={12} />
               </button>
 
               {isActive && (
-                <div className="absolute bottom-0 left-0 right-0 bg-blue-600 py-0.5 text-center text-xs font-bold text-white">
+                <div className="absolute bottom-0 left-0 right-0 bg-[#2A8C7A] py-0.5 text-center font-mono text-[10px] font-bold text-white">
                   Active
                 </div>
               )}

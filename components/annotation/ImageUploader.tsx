@@ -1,6 +1,7 @@
 "use client";
 
 import { ChangeEvent } from "react";
+import { Upload } from "lucide-react";
 
 import { uploadImage } from "@/services/annotation";
 
@@ -48,17 +49,22 @@ export default function ImageUploader() {
 
             <label
                 className="
+                inline-flex
                 cursor-pointer
+                items-center
+                gap-2
                 rounded-lg
-                bg-blue-600
+                bg-[#1F6F4A]
                 px-5
                 py-3
+                text-sm
+                font-semibold
                 text-white
-                hover:bg-blue-700
-                inline-block
+                transition
+                hover:bg-[#195c3d]
                 "
             >
-
+                <Upload size={17} />
                 Upload Image
 
                 <input

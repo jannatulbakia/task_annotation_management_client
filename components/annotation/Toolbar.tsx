@@ -22,8 +22,8 @@ export default function Toolbar() {
   };
 
   return (
-    <div className="flex flex-col gap-2 rounded-2xl border border-slate-200 bg-white p-3">
-      <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-slate-400">
+    <div className="flex flex-row gap-2 overflow-x-auto rounded-2xl border border-[#DCE3D7] bg-white p-3 sm:flex-col sm:overflow-visible">
+      <p className="mb-1 hidden font-mono text-xs font-semibold uppercase tracking-widest text-[#8A9389] sm:block">
         Tools
       </p>
 
@@ -31,28 +31,28 @@ export default function Toolbar() {
       <button
         onClick={() => setMode("select")}
         title="Select / Pan"
-        className={`flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium transition-all ${
+        className={`flex shrink-0 items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium transition-all ${
           mode === "select"
-            ? "bg-blue-600 text-white shadow-md"
-            : "text-slate-600 hover:bg-slate-100"
+            ? "bg-[#1F6F4A] text-white shadow-sm"
+            : "text-[#5C6B62] hover:bg-[#F7F8F3]"
         }`}
       >
         <MousePointer2 size={17} />
-        Select
+        <span className="hidden sm:inline">Select</span>
       </button>
 
       {/* Draw polygon tool */}
       <button
         onClick={() => setMode("draw")}
         title="Draw Polygon"
-        className={`flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium transition-all ${
+        className={`flex shrink-0 items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium transition-all ${
           mode === "draw"
-            ? "bg-yellow-500 text-white shadow-md"
-            : "text-slate-600 hover:bg-slate-100"
+            ? "bg-[#E8A33D] text-white shadow-sm"
+            : "text-[#5C6B62] hover:bg-[#F7F8F3]"
         }`}
       >
         <Pencil size={17} />
-        Draw Polygon
+        <span className="hidden sm:inline">Draw Polygon</span>
       </button>
 
       {/* Undo last point (only active while drawing) */}
@@ -60,18 +60,18 @@ export default function Toolbar() {
         onClick={removeDraftPoint}
         title="Undo Last Point"
         disabled={draftPoints.length === 0}
-        className="flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-100 disabled:opacity-40"
+        className="flex shrink-0 items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium text-[#5C6B62] hover:bg-[#F7F8F3] disabled:opacity-40"
       >
         <Undo2 size={17} />
-        Undo Point
+        <span className="hidden sm:inline">Undo Point</span>
       </button>
 
-      <div className="my-1 border-t border-slate-100" />
+      <div className="my-1 hidden border-t border-[#DCE3D7] sm:block" />
 
       {/* Upload new image */}
-      <label className="flex cursor-pointer items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-100">
+      <label className="flex shrink-0 cursor-pointer items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium text-[#5C6B62] hover:bg-[#F7F8F3]">
         <Upload size={17} />
-        Upload Image
+        <span className="hidden sm:inline">Upload Image</span>
         <input type="file" accept=".png,.jpg,.jpeg" onChange={handleUpload} hidden />
       </label>
     </div>

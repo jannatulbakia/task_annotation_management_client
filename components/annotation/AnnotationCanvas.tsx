@@ -14,13 +14,15 @@ function LabelModal({ onSave, onCancel }: LabelModalProps) {
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50">
       <div className="w-80 rounded-2xl bg-white p-6 shadow-2xl">
-        <h3 className="mb-4 text-lg font-bold text-slate-800">Label this annotation</h3>
+        <h3 className="mb-4 font-[Manrope,sans-serif] text-lg font-bold text-[#16241D]">
+          Label this annotation
+        </h3>
         <input
           autoFocus
           value={label}
           onChange={(e) => setLabel(e.target.value)}
           placeholder="e.g. Tumor, Lesion, ROI…"
-          className="w-full rounded-xl border border-slate-200 p-3 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+          className="w-full rounded-xl border border-[#DCE3D7] p-3 text-sm text-[#16241D] outline-none focus:border-[#2A8C7A] focus:ring-2 focus:ring-[#2A8C7A]/20"
           onKeyDown={(e) => {
             if (e.key === "Enter") onSave(label || "Annotation");
             if (e.key === "Escape") onCancel();
@@ -29,13 +31,13 @@ function LabelModal({ onSave, onCancel }: LabelModalProps) {
         <div className="mt-4 flex justify-end gap-2">
           <button
             onClick={onCancel}
-            className="rounded-xl border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50"
+            className="rounded-xl border border-[#DCE3D7] px-4 py-2 text-sm text-[#5C6B62] hover:bg-[#F7F8F3]"
           >
             Cancel
           </button>
           <button
             onClick={() => onSave(label || "Annotation")}
-            className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
+            className="rounded-xl bg-[#2A8C7A] px-4 py-2 text-sm font-semibold text-white hover:bg-[#237567]"
           >
             Save
           </button>
@@ -120,8 +122,8 @@ export default function AnnotationCanvas() {
 
   if (!currentImage) {
     return (
-      <div className="flex h-full min-h-[500px] items-center justify-center rounded-2xl border-2 border-dashed border-slate-200 text-slate-400">
-        <p className="text-center">
+      <div className="flex h-full min-h-[350px] items-center justify-center rounded-2xl border-2 border-dashed border-[#DCE3D7] bg-white text-[#9CA79E] sm:min-h-[500px]">
+        <p className="px-4 text-center text-sm sm:text-base">
           Upload an image to begin annotating
         </p>
       </div>
@@ -136,7 +138,7 @@ export default function AnnotationCanvas() {
 
       <div
         ref={containerRef}
-        className={`relative min-h-[400px] select-none overflow-hidden rounded-2xl border border-slate-200 bg-slate-900 ${
+        className={`relative min-h-[300px] select-none overflow-hidden rounded-2xl border border-[#DCE3D7] bg-[#16241D] sm:min-h-[400px] ${
           mode === "draw" ? "cursor-crosshair" : "cursor-default"
         }`}
         onClick={handleClick}
@@ -172,8 +174,8 @@ export default function AnnotationCanvas() {
               >
                 <polygon
                   points={pts}
-                  fill={isHovered ? "rgba(59,130,246,0.25)" : "rgba(59,130,246,0.12)"}
-                  stroke={isHovered ? "#2563eb" : "#3b82f6"}
+                  fill={isHovered ? "rgba(42,140,122,0.28)" : "rgba(42,140,122,0.14)"}
+                  stroke={isHovered ? "#2A8C7A" : "#5FB3A3"}
                   strokeWidth={isHovered ? "3" : "2"}
                   className="transition-all duration-150"
                 />
@@ -201,8 +203,8 @@ export default function AnnotationCanvas() {
               {draftPoints.length >= 3 && (
                 <polygon
                   points={draftPoints.map(toSVG).join(" ")}
-                  fill="rgba(234,179,8,0.15)"
-                  stroke="rgba(234,179,8,0.4)"
+                  fill="rgba(232,163,61,0.15)"
+                  stroke="rgba(232,163,61,0.4)"
                   strokeWidth="1"
                   strokeDasharray="8 4"
                 />
@@ -219,7 +221,7 @@ export default function AnnotationCanvas() {
                     y1={prev[1] * 10}
                     x2={pt[0] * 10}
                     y2={pt[1] * 10}
-                    stroke="#eab308"
+                    stroke="#E8A33D"
                     strokeWidth="2"
                   />
                 );
@@ -232,7 +234,7 @@ export default function AnnotationCanvas() {
                   y1={draftPoints[draftPoints.length - 1][1] * 10}
                   x2={cursor[0] * 10}
                   y2={cursor[1] * 10}
-                  stroke="#eab308"
+                  stroke="#E8A33D"
                   strokeWidth="2"
                   strokeDasharray="6 3"
                   opacity="0.7"
@@ -248,7 +250,7 @@ export default function AnnotationCanvas() {
                     cx={pt[0] * 10}
                     cy={pt[1] * 10}
                     r={isFirst ? "12" : "6"}
-                    fill={isFirst ? "rgba(234,179,8,0.4)" : "#eab308"}
+                    fill={isFirst ? "rgba(232,163,61,0.4)" : "#E8A33D"}
                     stroke="white"
                     strokeWidth="2"
                   />
@@ -260,10 +262,10 @@ export default function AnnotationCanvas() {
 
         {/* Drawing mode hint */}
         {mode === "draw" && (
-          <div className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-black/60 px-4 py-1.5 text-xs text-white backdrop-blur-sm">
+          <div className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-black/60 px-3 py-1.5 font-mono text-[11px] text-white backdrop-blur-sm sm:px-4 sm:text-xs">
             {draftPoints.length < 3
               ? `Click to place points — ${draftPoints.length} placed`
-              : "Double-click or click the first point to close the shape"}
+              : "Double-click or click the first point to close"}
           </div>
         )}
       </div>

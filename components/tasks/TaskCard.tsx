@@ -67,16 +67,16 @@ export default function TaskCard({
     };
   }, []);
 
-  const priorityColor = () => {
+  const priorityStyle = () => {
     switch (task.priority) {
       case "high":
-        return "bg-red-100 text-red-700";
+        return "bg-[#FBE7E7] text-[#C43D3D]";
 
       case "medium":
-        return "bg-yellow-100 text-yellow-700";
+        return "bg-[#FBF0DC] text-[#B9791E]";
 
       default:
-        return "bg-green-100 text-green-700";
+        return "bg-[#E7F1EA] text-[#1F6F4A]";
     }
   };
 
@@ -84,16 +84,16 @@ export default function TaskCard({
     <div
       ref={setNodeRef}
       style={style}
-      className="relative rounded-xl bg-white p-4 shadow transition-all duration-200 hover:-translate-y-1 hover:shadow-xl"
+      className="relative rounded-xl border border-[#DCE3D7] bg-white p-3.5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md sm:p-4"
     >
-      <div className="flex items-start justify-between">
+      <div className="flex items-start justify-between gap-2">
 
-        <h3 className="text-lg font-semibold">
+        <h3 className="text-sm font-semibold text-[#16241D] sm:text-base">
           {task.title}
         </h3>
 
         <div
-          className="flex items-center gap-1"
+          className="flex shrink-0 items-center gap-0.5"
           ref={menuRef}
         >
 
@@ -104,9 +104,9 @@ export default function TaskCard({
               e.stopPropagation();
               setOpen(!open);
             }}
-            className="rounded p-1 hover:bg-gray-100"
+            className="rounded p-1 text-[#5C6B62] hover:bg-[#F7F8F3]"
           >
-            <MoreVertical size={18} />
+            <MoreVertical size={17} />
           </button>
 
           {/* Drag Handle */}
@@ -114,20 +114,20 @@ export default function TaskCard({
           <button
             {...listeners}
             {...attributes}
-            className="cursor-grab rounded p-1 hover:bg-gray-100 active:cursor-grabbing"
+            className="cursor-grab rounded p-1 text-[#5C6B62] hover:bg-[#F7F8F3] active:cursor-grabbing"
           >
-            <GripVertical size={18} />
+            <GripVertical size={17} />
           </button>
 
           {open && (
-            <div className="absolute right-0 top-8 z-50 w-40 rounded-lg border bg-white shadow-xl">
+            <div className="absolute right-0 top-8 z-50 w-40 rounded-lg border border-[#DCE3D7] bg-white shadow-xl">
 
               <button
                 onClick={() => {
                   setOpen(false);
                   onEdit?.(task);
                 }}
-                className="flex w-full items-center gap-2 px-4 py-3 hover:bg-gray-100"
+                className="flex w-full items-center gap-2 px-4 py-3 text-sm text-[#16241D] hover:bg-[#F7F8F3]"
               >
                 <Pencil size={16} />
                 Edit
@@ -138,7 +138,7 @@ export default function TaskCard({
                   setOpen(false);
                   onDelete?.(task);
                 }}
-                className="flex w-full items-center gap-2 px-4 py-3 text-red-600 hover:bg-red-50"
+                className="flex w-full items-center gap-2 px-4 py-3 text-sm text-[#C43D3D] hover:bg-[#FBE7E7]"
               >
                 <Trash2 size={16} />
                 Delete
@@ -152,22 +152,22 @@ export default function TaskCard({
       </div>
 
       {task.description && (
-        <p className="mt-3 text-sm text-slate-600">
+        <p className="mt-2.5 text-sm leading-relaxed text-[#5C6B62]">
           {task.description}
         </p>
       )}
 
-      <div className="mt-5 flex items-center justify-between">
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-2 sm:mt-5">
 
         <span
-          className={`rounded-full px-3 py-1 text-xs font-semibold ${priorityColor()}`}
+          className={`rounded-full px-2.5 py-1 text-xs font-semibold ${priorityStyle()}`}
         >
           {task.priority.toUpperCase()}
         </span>
 
-        <div className="flex items-center gap-1 text-sm text-slate-500">
+        <div className="flex items-center gap-1 font-mono text-xs text-[#5C6B62]">
 
-          <Calendar size={16} />
+          <Calendar size={14} />
 
           {task.due_date}
 

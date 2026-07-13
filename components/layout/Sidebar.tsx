@@ -88,7 +88,7 @@ export default function Sidebar() {
           signed in as
         </p>
         <p className="mt-1 truncate text-sm font-medium text-[#16241D]">
-          john@gmail.com
+          jack@gmail.com
         </p>
       </div>
     </aside>

@@ -140,7 +140,7 @@ export default function LoginPage() {
           </form>
 
           <p className="mt-6 font-mono text-xs text-[#8A9389]">
-            demo · john@gmail.com / 12345678
+            demo · jack@gmail.com / jack1234
           </p>
         </div>
       </div>

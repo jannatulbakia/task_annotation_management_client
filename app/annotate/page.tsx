@@ -28,19 +28,22 @@ export default function AnnotatePage() {
   return (
     <ProtectedRoute>
       <AppLayout>
-        <div>
+        <div className="mx-auto max-w-6xl">
           {/* Page header */}
           <div className="mb-6">
-            <h1 className="text-3xl font-bold text-slate-800">
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#5C6B62]">
+              /annotate
+            </p>
+            <h1 className="mt-1 font-[Manrope,sans-serif] text-2xl font-bold text-[#16241D] sm:text-3xl">
               Image Annotation
             </h1>
-            <p className="mt-1 text-slate-500">
+            <p className="mt-1 text-sm text-[#5C6B62] sm:text-base">
               Upload radiology images and draw polygon annotations.
             </p>
           </div>
 
           {/* Main two-column layout */}
-          <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1fr_220px]">
+          <div className="grid grid-cols-1 gap-4 sm:gap-6 xl:grid-cols-[1fr_240px]">
 
             {/* Left — Canvas area */}
             <div className="flex flex-col gap-4">
@@ -49,7 +52,7 @@ export default function AnnotatePage() {
             </div>
 
             {/* Right — Toolbar & polygon list */}
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 xl:order-none">
               <Toolbar />
               <PolygonList />
             </div>

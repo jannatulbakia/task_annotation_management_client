@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 import { Task } from "@/types/task";
+import { todayString } from "@/lib/date";
 
 import {
   getTasks,
@@ -9,11 +10,6 @@ import {
   updateTaskStatus,
   deleteTask as deleteTaskService,
 } from "@/services/task";
-
-// Returns today's date as "YYYY-MM-DD"
-function todayString(): string {
-  return new Date().toISOString().slice(0, 10);
-}
 
 interface TaskStore {
   tasks: Task[];

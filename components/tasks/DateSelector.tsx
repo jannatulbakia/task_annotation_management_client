@@ -3,16 +3,13 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight, Calendar } from "lucide-react";
 import { useTaskStore } from "@/store/taskStore";
-
-function formatDate(d: Date): string {
-  return d.toISOString().slice(0, 10);
-}
-
-function addDays(d: Date, n: number): Date {
-  const result = new Date(d);
-  result.setDate(result.getDate() + n);
-  return result;
-}
+import {
+  toLocalDateString,
+  todayString,
+  addDays,
+  parseLocalDate,
+  startOfWeek,
+} from "@/lib/date";
 
 const DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const MONTH_NAMES = [
@@ -24,13 +21,9 @@ export default function DateSelector() {
   const { selectedDate, setSelectedDate } = useTaskStore();
 
   // Anchor = the Monday of the displayed week
-  const [weekStart, setWeekStart] = useState<Date>(() => {
-    const today = new Date(selectedDate);
-    const day = today.getDay(); // 0 = Sun
-    const monday = new Date(today);
-    monday.setDate(today.getDate() - ((day + 6) % 7));
-    return monday;
-  });
+  const [weekStart, setWeekStart] = useState<Date>(() =>
+    startOfWeek(parseLocalDate(selectedDate))
+  );
 
   const weekDays = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
 
@@ -46,46 +39,61 @@ export default function DateSelector() {
   const goToPrevWeek = () => setWeekStart(addDays(weekStart, -7));
   const goToNextWeek = () => setWeekStart(addDays(weekStart, 7));
 
+  const goToToday = () => {
+    const today = new Date();
+    setSelectedDate(todayString());
+    setWeekStart(startOfWeek(today));
+  };
+
   const handleDayClick = (d: Date) => {
-    setSelectedDate(formatDate(d));
+    setSelectedDate(toLocalDateString(d));
   };
 
   const handleDateInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value) return;
-    const picked = new Date(e.target.value + "T00:00:00");
-    setSelectedDate(formatDate(picked));
-    // Re-anchor the week to show the picked date
-    const day = picked.getDay();
-    const monday = new Date(picked);
-    monday.setDate(picked.getDate() - ((day + 6) % 7));
-    setWeekStart(monday);
+    const picked = parseLocalDate(e.target.value);
+    setSelectedDate(toLocalDateString(picked));
+    setWeekStart(startOfWeek(picked));
   };
 
+  const isCurrentWeek =
+    toLocalDateString(weekStart) === toLocalDateString(startOfWeek(new Date()));
+
   return (
-    <div className="mb-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-
+    <div className="mb-6 rounded-2xl border border-[#DCE3D7] bg-white p-4 shadow-sm sm:mb-8 sm:p-5">
       {/* Header row */}
-      <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-lg font-bold text-slate-800">{monthLabel}</h2>
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <h2 className="font-[Manrope,sans-serif] text-base font-bold text-[#16241D] sm:text-lg">
+          {monthLabel}
+        </h2>
 
-        <div className="flex items-center gap-2">
-          {/* Prev / Next week */}
+        <div className="flex items-center gap-1.5">
+          {!isCurrentWeek && (
+            <button
+              onClick={goToToday}
+              className="rounded-lg bg-[#E7F1EA] px-3 py-1.5 font-mono text-xs font-medium text-[#1F6F4A] transition hover:bg-[#DCEBE1]"
+            >
+              Today
+            </button>
+          )}
+
           <button
             onClick={goToPrevWeek}
-            className="rounded-lg p-2 text-slate-500 hover:bg-slate-100"
+            aria-label="Previous week"
+            className="rounded-lg p-2 text-[#5C6B62] hover:bg-[#F7F8F3]"
           >
             <ChevronLeft size={18} />
           </button>
 
           <button
             onClick={goToNextWeek}
-            className="rounded-lg p-2 text-slate-500 hover:bg-slate-100"
+            aria-label="Next week"
+            className="rounded-lg p-2 text-[#5C6B62] hover:bg-[#F7F8F3]"
           >
             <ChevronRight size={18} />
           </button>
 
-          {/* Calendar picker */}
-          <label className="relative cursor-pointer rounded-lg p-2 text-slate-500 hover:bg-slate-100">
+          <label className="relative cursor-pointer rounded-lg p-2 text-[#5C6B62] hover:bg-[#F7F8F3]">
             <Calendar size={18} />
             <input
               type="date"
@@ -98,28 +106,32 @@ export default function DateSelector() {
       </div>
 
       {/* Day buttons */}
-      <div className="grid grid-cols-7 gap-2">
+      <div className="grid grid-cols-7 gap-1 sm:gap-2">
         {weekDays.map((day) => {
-          const iso = formatDate(day);
+          const iso = toLocalDateString(day);
           const isSelected = iso === selectedDate;
-          const isToday = iso === formatDate(new Date());
+          const isToday = iso === todayString();
 
           return (
             <button
               key={iso}
               onClick={() => handleDayClick(day)}
-              className={`flex flex-col items-center gap-1 rounded-xl px-2 py-3 transition-all duration-200 ${
+              className={`flex flex-col items-center gap-0.5 rounded-lg px-1 py-2 transition-all duration-200 sm:gap-1 sm:rounded-xl sm:px-2 sm:py-3 ${
                 isSelected
-                  ? "bg-blue-600 text-white shadow-md"
+                  ? "bg-[#1F6F4A] text-white shadow-sm"
                   : isToday
-                  ? "border border-blue-300 text-blue-600 hover:bg-blue-50"
-                  : "text-slate-600 hover:bg-slate-100"
+                  ? "border border-[#1F6F4A]/40 text-[#1F6F4A] hover:bg-[#E7F1EA]"
+                  : "text-[#5C6B62] hover:bg-[#F7F8F3]"
               }`}
             >
-              <span className="text-xs font-medium">
+              <span className="text-[10px] font-medium sm:text-xs">
                 {DAY_NAMES[day.getDay()]}
               </span>
-              <span className={`text-xl font-bold ${isSelected ? "text-white" : ""}`}>
+              <span
+                className={`text-base font-bold sm:text-xl ${
+                  isSelected ? "text-white" : ""
+                }`}
+              >
                 {day.getDate()}
               </span>
             </button>
@@ -128,10 +140,10 @@ export default function DateSelector() {
       </div>
 
       {/* Selected date label */}
-      <p className="mt-3 text-center text-sm text-slate-500">
+      <p className="mt-3 text-center text-xs text-[#5C6B62] sm:text-sm">
         Showing tasks for{" "}
-        <span className="font-semibold text-slate-700">
-          {new Date(selectedDate + "T00:00:00").toLocaleDateString("en-US", {
+        <span className="font-semibold text-[#16241D]">
+          {parseLocalDate(selectedDate).toLocaleDateString("en-US", {
             weekday: "long",
             year: "numeric",
             month: "long",
