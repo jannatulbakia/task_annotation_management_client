@@ -97,8 +97,7 @@ export default function Home() {
 
           <p className="mt-6 max-w-md font-body text-base leading-relaxed text-[#5C6B62]">
             One workspace to run your kanban board day by day, and annotate
-            images with precision polygons — everything synced straight to a
-            Django backend.
+            images with precision polygons everything made to have your work saved and organized in one place.
           </p>
 
           <div className="mt-9 flex flex-wrap items-center gap-4">

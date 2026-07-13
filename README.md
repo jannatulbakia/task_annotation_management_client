@@ -1,36 +1,155 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Kanvas
 
-## Getting Started
+A task management and radiology image annotation tool built with Next.js.
 
-First, run the development server:
+# Live Link: 
+
+https://task-annotation-management-client-coral.vercel.app/
+
+## Overview
+
+Kanvas combines a Kanban task board with an image annotation tool. Users can create and manage tasks via a drag-and-drop Kanban interface, and upload radiology images to draw polygon annotations. JWT-based authentication secures all features.
+
+## Features
+
+### Task Management
+
+- **Kanban board** — drag tasks between To Do, In Progress, and Done
+- **CRUD** — create, edit, and delete tasks with a modal form
+- **Search & filter** — filter tasks by name, priority, and status
+- **Date picker** — switch between weeks to view tasks by their due date
+- **Priorities** — color-coded low/medium/high priority badges
+
+### Image Annotation
+
+- **Image upload** — upload PNG/JPG images for annotation
+- **Polygon drawing** — click-to-place polygon points; double-click or click on the first point to close the polygon
+- **Label assignment** — enter a label when saving a polygon
+- **Existing annotations** — view saved polygons as a list with the ability to delete them
+
+### Auth & Security
+
+- JWT-based authentication with access/refresh token pair
+- Auto token refresh on 401 errors
+- Token expiry checked for ProtectedRoute and login state
+- Server-side media proxy handles Authorization header
+
+## Architecture
+
+### Tech stack
+
+| Aspect | Technology |
+|---|---|
+| Framework | Next.js 16.2, App Router |
+| Language | TypeScript (strict) |
+| Bundler | Turbopack, Webpack |
+| Styling | Tailwind CSS 4, tw-animate-css |
+| UI | shadcn/ui (base-nova), lucide-react |
+| State | Zustand 5 |
+| Forms | React Hook Form + Zod |
+| HTTP | Axios (auto token refresh) |
+| Drag & drop | @dnd-kit |
+| Syntax | class-variance-authority, clsx |
+
+### Project structure
+
+```
+app/
+├── annotate/          # Image annotation pages
+├── annotate/annotation/
+├── api/media/[...path]/route.ts  # Server media proxy
+├── dashboard/         # Protected workspace hub
+├── login/             # Login route
+├── tasks/             # Kanban task board route
+├── page.tsx           # Public landing page
+└── layout.tsx         # Root layout
+
+components/
+├── auth/
+│   └── ProtectedRoute.tsx   # Client-side auth guard
+├── annotation/        # Annotation canvas, image upload/view, toolbar, polygon list
+├── layout/            # AppLayout, Navbar, Sidebar
+├── tasks/             # Task board, card, column, modal, delete, priority, date selector
+└── ui/                # shadcn/ui components (avatar, badge, button, calendar, card, dialog, etc.)
+
+services/              # Axios config, auth, task CRUD, annotation/image CRUD
+store/                 # Zustand stores: authStore, taskStore, annotationStore
+types/                 # TypeScript interfaces: auth, task, annotation
+schemas/               # Zod validation schemas: login, task
+lib/                   # Tailwind utils, local date helpers
+utils/                 # Media URL resolution
+```
+
+### Routes
+
+| Route | Type | Description |
+|---|---|---|
+| `/` | Public | Landing page with API status indicator |
+| `/login` | Public | Login form |
+| `/dashboard` | Protected | Workspace hub |
+| `/tasks` | Protected | Kanban task board |
+| `/annotate` | Protected | Full annotation page with canvas |
+| `/annotate/annotation` | Protected | Simplified upload + viewer |
+| `/api/media/[...path]` | Server | Media proxy with auth forwarding |
+
+### State stores
+
+- **authStore**: access/refresh tokens, login, logout, isLoggedIn
+- **taskStore**: tasks array, selectedDate, CRUD actions, status move
+- **annotationStore**: images, current image, polygons, draw mode, draft points
+
+## Setup
+
+### 1. Clone the repo
+
+```bash
+git clone <repo-url>
+cd frontend
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Configure environment
+
+Copy or edit `.env.local`:
+
+```env
+NEXT_PUBLIC_API_URL=https://your-backend.com/api
+```
+
+The backend must be a Django Rest Framework API with JWT auth endpoints at:
+- `POST /accounts/login/`
+- `POST /accounts/refresh/`
+- `GET/POST/PUT/PATCH/DELETE /tasks/`
+- `GET/POST/DELETE /images/`
+- `GET/POST/DELETE /polygons/`
+
+### 4. Start the dev server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 5. Demo login credentials
 
-## Learn More
+demo user: jack@gmail.com
+password: jack1234
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Build for production
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run build
+npm start
+```
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This is a private project.
