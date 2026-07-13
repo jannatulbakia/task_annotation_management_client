@@ -104,7 +104,7 @@ export default function TaskModal({ open, onClose }: Props) {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Task title…"
-              className="w-full rounded-xl border border-slate-200 p-3 text-sm outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+              className="w-full rounded-xl border border-slate-200 p-3 text-sm outline-none transition focus:border-green-400 focus:ring-2 focus:ring-green-100"
             />
           </div>
 
@@ -118,7 +118,7 @@ export default function TaskModal({ open, onClose }: Props) {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Optional description…"
-              className="w-full rounded-xl border border-slate-200 p-3 text-sm outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+              className="w-full rounded-xl border border-slate-200 p-3 text-sm outline-none transition focus:border-green-400 focus:ring-2 focus:ring-green-100"
             />
           </div>
 
@@ -129,7 +129,7 @@ export default function TaskModal({ open, onClose }: Props) {
               <select
                 value={priority}
                 onChange={(e) => setPriority(e.target.value as Task["priority"])}
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm outline-none focus:border-green-400 focus:ring-2 focus:ring-green-100"
               >
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
@@ -142,7 +142,7 @@ export default function TaskModal({ open, onClose }: Props) {
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value as Task["status"])}
-                className="w-full rounded-xl border border-slate-200 p-3 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+                className="w-full rounded-xl border border-slate-200 p-3 text-sm outline-none focus:border-green-400 focus:ring-2 focus:ring-green-100"
               >
                 <option value="todo">Todo</option>
                 <option value="in_progress">In Progress</option>
@@ -158,7 +158,7 @@ export default function TaskModal({ open, onClose }: Props) {
               type="date"
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
-              className="w-full rounded-xl border border-slate-200 p-3 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+              className="w-full rounded-xl border border-slate-200 p-3 text-sm outline-none focus:border-green-400 focus:ring-2 focus:ring-green-100"
             />
           </div>
 
@@ -177,13 +177,13 @@ export default function TaskModal({ open, onClose }: Props) {
                 {tags.map((tag) => (
                   <span
                     key={tag}
-                    className="flex items-center gap-1 rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-700"
+                    className="flex items-center gap-1 rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700"
                   >
                     {tag}
                     <button
                       type="button"
                       onClick={() => removeTag(tag)}
-                      className="ml-1 text-blue-400 hover:text-blue-700"
+                      className="ml-1 text-[#1F6F4A] hover:text-[#186340]"
                     >
                       <X size={12} />
                     </button>
@@ -199,7 +199,7 @@ export default function TaskModal({ open, onClose }: Props) {
                 onKeyDown={handleTagKeyDown}
                 placeholder="Add a tag…"
                 disabled={tags.length >= 5}
-                className="flex-1 rounded-xl border border-slate-200 p-3 text-sm outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100 disabled:opacity-50"
+                className="flex-1 rounded-xl border border-slate-200 p-3 text-sm outline-none transition focus:border-green-400 focus:ring-2 focus:ring-green-100 disabled:opacity-50"
               />
               <button
                 type="button"
@@ -224,7 +224,7 @@ export default function TaskModal({ open, onClose }: Props) {
             <button
               type="submit"
               disabled={loading}
-              className="rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 disabled:opacity-60"
+              className="rounded-xl bg-[#1F6F4A] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#186340] disabled:opacity-60"
             >
               {loading ? "Creating…" : "Create Task"}
             </button>
