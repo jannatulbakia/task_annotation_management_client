@@ -5,7 +5,7 @@ const links = [
     href: "/tasks",
     label: "Task board",
     description:
-      "Manage your day by day kanban board — add, edit, and drag tasks between To Do, In Progress, and Done.",
+      "Manage your day by day kanban board; add, edit, and drag tasks between To Do, In Progress, and Done.",
     accent: "#1F6F4A",
     accentTint: "#E7F1EA",
     icon: (
@@ -20,7 +20,7 @@ const links = [
     href: "/annotate",
     label: "Annotation tool",
     description:
-      "Upload images, draw polygons, and manage annotations — everything saved straight to your workspace.",
+      "Upload images, draw polygons, and manage annotations; everything saved straight to your workspace.",
     accent: "#2A8C7A",
     accentTint: "#E4F3EF",
     icon: (
